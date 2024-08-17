@@ -1,5 +1,6 @@
 ﻿using Inventory_Mngt_API.Data;
 using Inventory_Mngt_API.Models.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Inventory_Mngt_API.Repositories
 {
@@ -17,6 +18,11 @@ namespace Inventory_Mngt_API.Repositories
             await inventoryDbContext.Products.AddAsync(product);
             await inventoryDbContext.SaveChangesAsync();
             return product;
+        }
+
+        public async Task<List<ProductsModel>> GetAllAsync()
+        {
+           return  await inventoryDbContext.Products.ToListAsync();
         }
     }
 }

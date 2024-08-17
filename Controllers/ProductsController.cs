@@ -13,14 +13,16 @@ namespace Inventory_Mngt_API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductRepository productRepository;
+        private readonly IMapper mapper;
 
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
             this.productRepository = productRepository;
+            this.mapper = mapper;
         }
 
         [HttpPost]
-        public async Task <IActionResult> Create([FromBody] AddProductsDto productsDto, IMapper mapper)
+        public async Task <IActionResult> Create([FromBody] AddProductsDto productsDto )
         {
             //map DTO to domain model
             var productDomainModel = mapper.Map<ProductsModel>(productsDto);
@@ -30,6 +32,16 @@ namespace Inventory_Mngt_API.Controllers
             //Map Domain model to DTO
             return Ok(mapper.Map<AddProductsDto>(productDomainModel));
 
+        }
+
+        [HttpGet]
+        public async Task <IActionResult> GetAll() 
+        { 
+            var productsDomainModel = await productRepository.GetAllAsync();
+
+            var productsDto = mapper.Map<List<ProductsModel>>(productsDomainModel);
+
+            return Ok(productsDto);
         }
     }
 }

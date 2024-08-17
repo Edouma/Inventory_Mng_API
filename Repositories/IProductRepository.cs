@@ -5,5 +5,6 @@ namespace Inventory_Mngt_API.Repositories
     public interface IProductRepository
     {
         Task<ProductsModel> CreateAsync(ProductsModel product);
+        Task<List<ProductsModel>> GetAllAsync();
     }
 }
