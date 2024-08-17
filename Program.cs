@@ -1,5 +1,8 @@
 using Inventory_Mngt_API.Data;
+using Inventory_Mngt_API.Mappings;
+using Inventory_Mngt_API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<InventoryDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryConnectionString")));
+
+builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 

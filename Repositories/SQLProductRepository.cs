@@ -1,12 +1,22 @@
-﻿using Inventory_Mngt_API.Models.Domain;
+﻿using Inventory_Mngt_API.Data;
+using Inventory_Mngt_API.Models.Domain;
 
 namespace Inventory_Mngt_API.Repositories
 {
     public class SQLProductRepository : IProductRepository
     {
-        public Task<ProductsModel> CreateAsync(ProductsModel product)
+        private readonly InventoryDbContext inventoryDbContext;
+
+        public SQLProductRepository(InventoryDbContext inventoryDbContext)
         {
-            throw new NotImplementedException();
+            this.inventoryDbContext = inventoryDbContext;
+        }
+
+        public async Task<ProductsModel> CreateAsync(ProductsModel product)
+        {
+            await inventoryDbContext.Products.AddAsync(product);
+            await inventoryDbContext.SaveChangesAsync();
+            return product;
         }
     }
 }
