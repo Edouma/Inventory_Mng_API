@@ -22,15 +22,15 @@ namespace Inventory_Mngt_API.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> Create([FromBody] AddProductsDto productsDto )
+        public async Task <IActionResult> Create([FromBody] AddProductRequestDto addProductRequestDto )
         {
             //map DTO to domain model
-            var productDomainModel = mapper.Map<ProductsModel>(productsDto);
+            var productDomainModel = mapper.Map<ProductsModel>(addProductRequestDto);
 
             productDomainModel = await productRepository.CreateAsync(productDomainModel);
 
             //Map Domain model to DTO
-            return Ok(mapper.Map<AddProductsDto>(productDomainModel));
+            return Ok(mapper.Map<ProductsDto>(productDomainModel));
 
         }
 
@@ -42,6 +42,37 @@ namespace Inventory_Mngt_API.Controllers
             var productsDto = mapper.Map<List<ProductsModel>>(productsDomainModel);
 
             return Ok(productsDto);
+        }
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task <IActionResult> GetById([FromRoute] Guid id)
+        {
+            //Get product domain modal from database
+            var productDomain = await productRepository.GetByIdAsync(id);
+
+            if (productDomain == null)
+            {
+                return NotFound();
+            }
+
+            var productDTO = mapper.Map<ProductsDto>(productDomain);
+            return Ok(productDTO);
+        }
+        [HttpDelete]
+        [Route("{id: Guid}")]
+        public async Task<IActionResult> DeleteAync([FromRoute] Guid id)
+        {
+            var productDomain = await productRepository.DeleteAsync(id);
+
+            if (productDomain == null)
+            {
+                return NotFound();
+            }
+
+            //Map domain model to DTO
+            var productDto = mapper.Map<ProductsDto>(productDomain);
+
+            return Ok(productDto);
         }
     }
 }

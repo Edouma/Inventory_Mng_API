@@ -8,7 +8,9 @@ namespace Inventory_Mngt_API.Mappings
     {
         public AutoMapperProfiles()
         {
-            CreateMap<ProductsModel, AddProductsDto>().ReverseMap();
+            CreateMap<ProductsModel, ProductsDto>().ReverseMap();
+            CreateMap<ProductsModel, AddProductRequestDto>().ReverseMap();
+            CreateMap<ProductsModel, UpdateProductRequestDto>().ReverseMap();
         }
 
     }
