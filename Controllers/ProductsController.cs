@@ -59,10 +59,28 @@ namespace Inventory_Mngt_API.Controllers
             return Ok(productDTO);
         }
         [HttpDelete]
-        [Route("{id: Guid}")]
+        [Route("{id:Guid}")]
         public async Task<IActionResult> DeleteAync([FromRoute] Guid id)
         {
             var productDomain = await productRepository.DeleteAsync(id);
+
+            if (productDomain == null)
+            {
+                return NotFound();
+            }
+
+            //Map domain model to DTO
+            var productDto = mapper.Map<ProductsDto>(productDomain);
+
+            return Ok(productDto);
+        }
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateProductRequestDto updateProductRequestDto)
+        {
+            var productDomain = mapper.Map<ProductsModel>(updateProductRequestDto);
+
+            productDomain = await productRepository.UpdateAsync(id, productDomain);
 
             if (productDomain == null)
             {

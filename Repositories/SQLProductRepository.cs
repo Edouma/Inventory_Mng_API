@@ -52,5 +52,24 @@ namespace Inventory_Mngt_API.Repositories
 
             return response;
         }
+
+        public async Task<ProductsModel?> UpdateAsync(Guid id, ProductsModel products)
+        {
+            var existingProduct = await inventoryDbContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existingProduct == null)
+            {
+
+                return null;
+            }
+
+            existingProduct.ProductName = products.ProductName;
+            existingProduct.ProductDescription = products.ProductDescription;
+            existingProduct.Price = products.Price;
+            
+            await inventoryDbContext.SaveChangesAsync();
+
+            return existingProduct;
+        }
     }
 }
