@@ -14,5 +14,8 @@ namespace Inventory_Mngt_API.Models.DTO
 
         [Required]
         public int Price { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
     }
 }
