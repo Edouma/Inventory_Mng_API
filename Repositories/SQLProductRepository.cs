@@ -66,6 +66,7 @@ namespace Inventory_Mngt_API.Repositories
             existingProduct.ProductName = products.ProductName;
             existingProduct.ProductDescription = products.ProductDescription;
             existingProduct.Price = products.Price;
+            existingProduct.Quantity = products.Quantity;
             
             await inventoryDbContext.SaveChangesAsync();
 
