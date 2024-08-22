@@ -17,6 +17,7 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryConnectionString")));
 
 builder.Services.AddScoped<IProductRepository, SQLProductRepository>();
+builder.Services.AddScoped<IMakeSaleRepository, SQLMakeSaleRepository>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
