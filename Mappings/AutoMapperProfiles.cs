@@ -13,6 +13,9 @@ namespace Inventory_Mngt_API.Mappings
             CreateMap<ProductsModel, UpdateProductRequestDto>().ReverseMap();
 
             CreateMap<MakeSaleModel, MakeSaleDto>().ReverseMap();
+
+            CreateMap<MakeSaleModel, DisplaySaleDto>()
+           .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName));
         }
 
     }

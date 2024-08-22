@@ -38,7 +38,7 @@ namespace Inventory_Mngt_API.Controllers
         {
             var salesDomainModel = await makeSaleRepository.GetAllAsync();
 
-            var salesDto = mapper.Map<List<MakeSaleModel>>(salesDomainModel);
+            var salesDto = mapper.Map<List<DisplaySaleDto>>(salesDomainModel);
 
             return Ok(salesDto);
         }

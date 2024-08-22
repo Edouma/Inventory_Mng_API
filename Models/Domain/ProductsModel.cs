@@ -9,7 +9,6 @@
         public int Quantity { get; set; }
 
         //Navigation property
-        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<MakeSaleModel> Sales { get; set; }
 
     }

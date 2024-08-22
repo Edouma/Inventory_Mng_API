@@ -46,8 +46,13 @@ namespace Inventory_Mngt_API.Repositories
 
         public async Task<List<MakeSaleModel>> GetAllAsync()
         {
-            return await inventoryDbContext.Sales.Include("Product").ToListAsync();
+            //return await inventoryDbContext.Sales.Include("Product").ToListAsync();
+            return await inventoryDbContext.Sales
+        .Include(s => s.Product) // Ensure the Product is included
+        .ToListAsync();
         }
+
+
     }
 }
 //return await dbContext.Walks.Include("Difficulty").Include("Region").ToListAsync();
