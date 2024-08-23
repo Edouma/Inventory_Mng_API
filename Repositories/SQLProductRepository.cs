@@ -72,5 +72,23 @@ namespace Inventory_Mngt_API.Repositories
 
             return existingProduct;
         }
+
+        public async Task<ProductsModel> ReplenishStockAsync(Guid productId, int quantityToAdd)
+        {
+            var product = await inventoryDbContext.Products.FindAsync(productId);
+
+            if (product == null)
+            {
+                throw new Exception("Product not found"); // Handle this more gracefully in a real-world app
+            }
+
+            // Add the quantity to the product's stock
+            product.Quantity += quantityToAdd;
+
+            await inventoryDbContext.SaveChangesAsync();
+
+            return product;
+        }
+
     }
 }

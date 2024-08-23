@@ -92,5 +92,18 @@ namespace Inventory_Mngt_API.Controllers
 
             return Ok(productDto);
         }
+
+        [HttpPost("replenish")]
+        public async Task<IActionResult> ReplenishStock([FromBody] ReplenishStockDto replenishStockDto)
+        {
+            // Use the productId to identify the product and add the quantityToAdd
+            var productDomainModel = await productRepository.ReplenishStockAsync(replenishStockDto.ProductId, replenishStockDto.QuantityToAdd);
+
+            // Map Domain model to DTO
+            var productDto = mapper.Map<ProductsDto>(productDomainModel);
+
+            return Ok(productDto);
+        }
+
     }
 }

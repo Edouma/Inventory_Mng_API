@@ -9,5 +9,6 @@ namespace Inventory_Mngt_API.Repositories
         Task<ProductsModel?> GetByIdAsync(Guid id);
         Task<ProductsModel?> DeleteAsync(Guid id);
         Task<ProductsModel?> UpdateAsync(Guid id, ProductsModel products);
+        Task<ProductsModel> ReplenishStockAsync(Guid productId, int quantityToAdd);
     }
 }
